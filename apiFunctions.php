@@ -37,56 +37,11 @@ function readDirectory($dir){
   // if(allowOnlyFilesFolder($dir)) 
   //    die($errorMsg);
 
-  // // array to hold return value
-  // $retval = [];  
   $strJsonFileContents = file_get_contents("fileStructure.json");
-
-  // // add trailing slash if missing
-  // if(substr($dir, -1) != "/") {
-  //   $dir .= "/";
-  // }
-
-  // // open pointer to directory and read list of files
-  // $d = @dir($dir) or die($errorMsg);
-
-
-  // while(FALSE !== ($fileName = $d->read())) {
-  //   $fullPath = "{$dir}{$fileName}";
-  //   // skip hidden files
-  //   if($fileName{0} == ".") continue;
-  //      $retval[] = [
-  //       'label' => $fileName,
-  //       'dir' => $dir,
-  //       'type' => filetype($fullPath),
-  //       'id' => time() + rand(10,10000)
-  //     ];
-
-  //     //  use the following function to get a recrusive tree directory (might be slow as it grows)
-  //   // if(is_dir($fullPath)) {
-  //   //   $retval[] = [
-  //   //     'label' => $fileName,
-  //   //     // 'fullPath' => $fullPath,
-  //   //     'dir' => $dir,
-  //   //     'type' => filetype($fullPath),
-  //   //   'id' => time() + rand(10,10000),
-  //   //     'files' => getDirectoryTree($fullPath)
-  //   //   ];
-  //   // } elseif(is_readable($fullPath)) {
-  //   //   $retval[] = [
-  //   //     'label' => $fileName,
-  //   //     // 'fullPath' => $fullPath,
-  //   //     'dir' => $dir,
-  //   //     'type' => filetype($fullPath),
-  //   //    'id' => time() + rand(10,10000)
-  //   //   ];
-  //   // }
-  // }
-  // $d->close();
 
   return array(
     'error' => false,
     'msg' => GET_DIR_SUCCESS,
-    // 'data' => $retval
     'data' => json_decode($strJsonFileContents, true)
   );
 }
