@@ -10,8 +10,7 @@
       "type": "dir",
       "children": [
         { "id":1, "type":"file", "label": "Document 1" }, 
-        { "id": 2, "type":"file","label": "Document 2"}
-        
+        { "id": 2, "type":"file","label": "Document 2"}  
       ]
     },
     {
