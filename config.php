@@ -1,6 +1,5 @@
 <?php
 
-
 define('FILES_FOLDER', './files/');
 define('DOCS_FILE_STRUCTURE', 'docsFileStructure.json');
 define('TEMPLATE_FILE', './templates/index.md');
