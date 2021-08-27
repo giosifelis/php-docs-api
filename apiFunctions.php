@@ -30,104 +30,43 @@ function logout(){
       exit;
 }
 
-//https://www.the-art-of-web.com/php/directory-list/
-function readDirectory($dir){
-  // die if we are NOT in the FILES_FOLDER
-  // $errorMsg = json_encode(responseMessage(true, GET_DIR_ERROR));
-  // if(allowOnlyFilesFolder($dir)) 
-  //    die($errorMsg);
-
-  $strJsonFileContents = file_get_contents("fileStructure.json");
+function readDirectory(){
+ 
+  $jsonFileContents = file_get_contents(DOCS_FILE_STRUCTURE);
 
   return array(
     'error' => false,
-    'msg' => GET_DIR_SUCCESS,
-    'data' => json_decode($strJsonFileContents, true)
+    'msg' => READ_DIR_SUCCESS,
+    'data' => json_decode($jsonFileContents, true)
   );
 }
 
-function createDir($dir, $fileName){
+function updateDirectory( $newContent=false ){
 
-  // die if we are NOT in the FILES_FOLDER
-  $errorMsg = json_encode(responseMessage(true, FOLDER_NOT_CREATED));
-  if(allowOnlyFilesFolder($dir)) 
-     die($errorMsg);
-  
-  $dir = str_replace('./', '', $dir);
-  $folderName = $dir."/".$fileName;
-
-  if(!is_dir($folderName) && mkdir($folderName)){
-    
-    return responseMessage(false, FOLDER_CREATED);
+  if(is_file(DOCS_FILE_STRUCTURE) && file_put_contents(DOCS_FILE_STRUCTURE, $newContent)){
+    return responseMessage(false, UPDATE_DIR_SUCCESS);
   } else {
-    return responseMessage(true, FOLDER_NOT_CREATED);
+    return responseMessage(true, UPDATE_DIR_ERROR);
   }
 
 }
 
-function renameFileOrFolder( $dir=false, $fileName=false ){
- // die if we are NOT in the FILES_FOLDER
- $errorMsg = json_encode(responseMessage(true, NOT_RENAMED));
- if(allowOnlyFilesFolder($dir)) 
-    die($errorMsg);
+function createFile( $fileName=false ){
+
+  $filePath = createFilePath($fileName); 
   
- // get the current directory
-  $baseDir = $dir;
-  $baseDir = explode('/', $baseDir);
-  array_pop($baseDir);
-  $baseDir = implode('/', $baseDir);
-  $newFolderName = $baseDir."/".$fileName;
-
-  if(rename($dir, $newFolderName)) {
-    return responseMessage(false, RENAMED);
-  } else {
-    return responseMessage(true, NOT_RENAMED);
-  }
-
-
-}
-
-function deleteDir( $dir=false){
-  // die if we are NOT in the FILES_FOLDER
-  $errorMsg = json_encode(responseMessage(true, FOLDER_NOT_DELETED));
-  if(allowOnlyFilesFolder($dir)) 
-     die($errorMsg);
-
-  if(is_dir($dir) && rmdir($dir)){
-    return responseMessage(false, FOLDER_DELETED);
-  } else {
-    return responseMessage(true, FOLDER_NOT_DELETED);
-  }
-}
-
-function createFile( $dir=false, $filename=false ){
-
-  // die if we are NOT in the FILES_FOLDER
-  $errorMsg = json_encode(responseMessage(true, FILE_NOT_CREATED));
-  if(allowOnlyFilesFolder($dir)) 
-     die($errorMsg);
-  
-  $dir = str_replace('./', '', $dir);
-
-  $source = TEMPLATE_FOLDER; 
-  // $destination = $dir . DIRECTORY_SEPARATOR . time() .".". $filename .".md"; 
-  $destination = $dir . DIRECTORY_SEPARATOR . $filename .".md"; 
-  
-  if( copy($source, $destination) ) { 
+  if( !is_file($filePath) && copy(TEMPLATE_FILE, $filePath) ) { 
     return responseMessage(false, FILE_CREATED);
   } else { 
     return responseMessage(true, FILE_NOT_CREATED); 
   } 
 }
 
-function updateFile( $file=false, $newContent=false ){
-// die if we are NOT in the FILES_FOLDER
-  $errorMsg = json_encode(responseMessage(true, FILE_NOT_UPDATED));
-  if(allowOnlyFilesFolder($file)) 
-     die($errorMsg);
+function updateFile( $fileName=false, $newContent=false ){
 
+  $filePath = createFilePath($fileName); 
 
-  if(is_file($file) && file_put_contents($file, $newContent)){
+  if(is_file($filePath) && file_put_contents($filePath, $newContent)){
     return responseMessage(false, FILE_UPDATED);
   } else {
     return responseMessage(true, FILE_NOT_UPDATED);
@@ -135,31 +74,14 @@ function updateFile( $file=false, $newContent=false ){
 
 }
 
-function deleteFile( $file=false){
-  // die if we are NOT in the FILES_FOLDER
-  $errorMsg = json_encode(responseMessage(true, FILE_NOT_DELETED));
-  if(allowOnlyFilesFolder($file)) 
-     die($errorMsg);
+function deleteFile( $fileName=false ){
+  
+  $filePath = createFilePath($fileName); 
 
-  if(is_file($file) && unlink($file) ){
+  if(is_file($filePath) && unlink($filePath) ){
     return responseMessage(false, FILE_DELETED);
   } else {
     return responseMessage(true, FILE_NOT_DELETED);
   }
 }
 
-function findFile( $file=false){
-  // die if we are NOT in the FILES_FOLDER
-  $errorMsg = json_encode(responseMessage(true, FILE_NOT_FOUND));
-  if(allowOnlyFilesFolder($file)) 
-     die($errorMsg);
-
-  if(is_file($file) ){
-
-
-
-    return responseMessage(false, FILE_FOUND);
-  } else {
-    return responseMessage(true, FILE_NOT_FOUND);
-  }
-}

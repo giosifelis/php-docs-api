@@ -1,5 +1,9 @@
 <?php
 
+function createFilePath($filename, $ext = FILE_EXTENSION){
+    return FILES_FOLDER.$filename.".".$ext;
+}
+
 function checkSession($sessionVar){
   $errorMsg = json_encode(responseMessage(true, LOGIN_ERROR));
     if(!$sessionVar) die($errorMsg);

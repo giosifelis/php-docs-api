@@ -17,7 +17,8 @@ $apiInput = json_decode(file_get_contents("php://input"));
 
 $action = $apiInput->action;
 $filePath = $apiInput->path;
-$fileOrFolderName = $apiInput->newName;
+$oldFileName = $apiInput->oldFileName;
+$fileName = $apiInput->fileName;
 $newContent = $apiInput->newContent;
 $userName = $apiInput->userName;
 $password = $apiInput->password;
@@ -32,61 +33,36 @@ $password = $apiInput->password;
 
   } elseif ($action === READ_DIR) {
 
-    // checkSession($_SESSION['isLoggedIn']);
-
-    $data = readDirectory($filePath);
+    $data = readDirectory();
 		apiResponse($data);
 
-	} elseif ($action === CREATE_DIR) {
-
-    checkSession($_SESSION['isLoggedIn']);
-  
-    $data = createDir($filePath , $fileOrFolderName);
-		apiResponse($data);
-     
-	} elseif ($action === RENAME_DIR) {
-    
+	} elseif ($action === UPDATE_DIR) {
     // checkSession($_SESSION['isLoggedIn']);
+    $data = updateDirectory($newContent);
+		apiResponse($data);
 
-    $data = renameFileOrFolder($filePath , $fileOrFolderName);
-    apiResponse($data);
-
-	} elseif ($action === DELETE_DIR) {
-    
-    checkSession($_SESSION['isLoggedIn']);
-
-    $data = deleteDir($filePath);
-    apiResponse($data);
-     
 	} elseif ($action === CREATE_FILE) {
     
     // checkSession($_SESSION['isLoggedIn']);
 
-    $data = createFile($filePath , $fileOrFolderName);
+    $data = createFile($fileName);
     apiResponse($data);
      
 	} elseif ($action === UPDATE_FILE) {
     
-    checkSession($_SESSION['isLoggedIn']);
+    // checkSession($_SESSION['isLoggedIn']);
 
-    $data = updateFile($filePath , $newContent);
+    $data = updateFile($fileName , $newContent);
     apiResponse($data);
      
 	} elseif ($action === DELETE_FILE) {
-    
-    checkSession($_SESSION['isLoggedIn']);
+  
+   // checkSession($_SESSION['isLoggedIn']);
 
-    $data = deleteFile($filePath);
+    $data = deleteFile($fileName);
     apiResponse($data);   
 
-	} elseif ($action === FIND_FILE) {
-    
-    // checkSession($_SESSION['isLoggedIn']);
-
-    $data = deleteFile($filePath);
-    apiResponse($data);   
-
-	}  else {
+	} else {
     
   //  checkSession($_SESSION['isLoggedIn']);
 

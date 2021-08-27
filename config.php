@@ -1,15 +1,12 @@
 <?php
 
 
-define('FILES_FOLDER', 'files');
-define('TEMPLATE_FOLDER', './templates/index.md');
+define('FILES_FOLDER', './files/');
+define('DOCS_FILE_STRUCTURE', 'docsFileStructure.json');
+define('TEMPLATE_FILE', './templates/index.md');
+define('FILE_EXTENSION', 'md');
 
 // ----- MESSAGES -----
-define('FOLDER_CREATED', 'Folder Created');
-define('FOLDER_NOT_CREATED', 'Failed creating folder');
-define('FOLDER_DELETED', 'Folder Deleted');
-define('FOLDER_NOT_DELETED', 'Failed deleting folder');
-
 define('FILE_CREATED', 'File Created');
 define('FILE_NOT_CREATED', 'Failed creating file');
 define('FILE_UPDATED', 'File Updated');
@@ -22,8 +19,10 @@ define('FILE_NOT_FOUND', 'Failed finding file');
 define('RENAMED', 'File or Folder Renamed');
 define('NOT_RENAMED', 'File or Folder Not Renamed');
 
-define('GET_DIR_SUCCESS', "Success opening folder");
-define('GET_DIR_ERROR', "Failed opening folder");
+define('READ_DIR_SUCCESS', "Success opening folder");
+define('READ_DIR_ERROR', "Failed opening folder");
+define('UPDATE_DIR_SUCCESS', "Directory Updated");
+define('UPDATE_DIR_ERROR', "Failed updating directory");
 
 define('FAILED_PARAMS', "Params or Values are not correct");
 
@@ -39,16 +38,12 @@ define('LOGIN', 'login');
 define('LOGOUT', 'logout');
 
 define('READ_DIR', 'readDir');
-
-define('CREATE_DIR', 'createDir');
-define('RENAME_DIR', 'renameDir');
-define('DELETE_DIR', 'deleteDir');
+define('UPDATE_DIR', 'updateDir');
 
 define('CREATE_FILE', 'createFile');
 define('UPDATE_FILE', 'updateFile');
 define('DELETE_FILE', 'deleteFile');
 
-define('FIND_FILE', 'findFile');
 
 
 
