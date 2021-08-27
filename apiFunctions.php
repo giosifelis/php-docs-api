@@ -43,6 +43,8 @@ function readDirectory(){
 
 function updateDirectory( $newContent=false ){
 
+  checkSession($_SESSION['isLoggedIn']);
+
   if(is_file(DOCS_FILE_STRUCTURE) && file_put_contents(DOCS_FILE_STRUCTURE, $newContent)){
     return responseMessage(false, UPDATE_DIR_SUCCESS);
   } else {
@@ -52,6 +54,8 @@ function updateDirectory( $newContent=false ){
 }
 
 function createFile( $fileName=false ){
+
+  checkSession($_SESSION['isLoggedIn']);
 
   $filePath = createFilePath($fileName); 
   
@@ -64,6 +68,8 @@ function createFile( $fileName=false ){
 
 function updateFile( $fileName=false, $newContent=false ){
 
+  checkSession($_SESSION['isLoggedIn']);
+
   $filePath = createFilePath($fileName); 
 
   if(is_file($filePath) && file_put_contents($filePath, $newContent)){
@@ -75,6 +81,8 @@ function updateFile( $fileName=false, $newContent=false ){
 }
 
 function deleteFile( $fileName=false ){
+  
+  checkSession($_SESSION['isLoggedIn']);
   
   $filePath = createFilePath($fileName); 
 
