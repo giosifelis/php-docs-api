@@ -16,7 +16,6 @@ header('Content-Type: application/json');
 $apiInput = json_decode(file_get_contents("php://input"));
 
 $action = $apiInput->action;
-$filePath = $apiInput->path;
 $oldFileName = $apiInput->oldFileName;
 $fileName = $apiInput->fileName;
 $newContent = $apiInput->newContent;
